@@ -37,6 +37,7 @@ app.post('/cursos', async (req, res) => {
 
     // Verifica se todos os campos estão preenchidos
     if (
+
       !titulo ||
       !modalidade ||
       !carga_horaria ||
@@ -74,8 +75,6 @@ app.post('/cursos', async (req, res) => {
         imagem,
       ]
     );
-
-    
     if (result.rowCount > 0) {
       res.status(201).send({ message: 'Curso cadastrado com sucesso' });
     } else {
@@ -87,6 +86,73 @@ app.post('/cursos', async (req, res) => {
   }
 });
 
+app.put('/cursos/:id', async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  const { 
+    titulo, 
+    modalidade, 
+    carga_horaria, 
+    nivel, 
+    descricao, 
+    descricao_requisitos, 
+    programacao, 
+    modalidade_aula, 
+    metodologia_ensino, 
+    idade, 
+    turnos, 
+    status, 
+    imagem
+  } = req.body;
+
+  const query = `
+    UPDATE cursos 
+    SET titulo = $1, modalidade = $2, carga_horaria = $3, nivel = $4, descricao = $5, descricao_requisitos = $6, 
+        programacao = $7, modalidade_aula = $8, metodologia_ensino = $9, idade = $10, turnos = $11, status = $12, imagem = $13 
+    WHERE id_cursos = $14
+  `;
+  
+  const values = [
+    titulo, 
+    modalidade, 
+    carga_horaria, 
+    nivel, 
+    descricao, 
+    descricao_requisitos, 
+    programacao, 
+    modalidade_aula, 
+    metodologia_ensino, 
+    idade, 
+    turnos, 
+    status, 
+    imagem, 
+    id
+  ];
+
+  try {
+    await pool.query(query, values);
+    res.send('Curso atualizado com sucesso');
+  } catch (err) {
+    console.error('Erro ao atualizar curso:', err);
+    res.status(500).send('Erro ao atualizar curso');
+  }
+});
+
+
+app.delete('/cursos/:id', async (req, res) => {
+  const id = req.params.id;
+  const query = 'DELETE FROM cursos WHERE id_cursos=$1 ';
+
+  try {
+    await pool.query(query, [id]);
+    res.send('curso deletado com sucesso');
+  } catch (err) {
+    console.error('Erro ao deletar curso:', err);
+    res.status(500).send('Erro ao deletar curso');
+  }
+});
+
+
 app.listen(PORT, () => {
-  console.log('Servidor rodando na porta ${PORT}');
+  console.log('Servidor rodando na porta ${PORT} 👨‍🏫👨‍🎓');
 });
