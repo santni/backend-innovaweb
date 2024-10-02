@@ -152,7 +152,100 @@ app.delete('/cursos/:id', async (req, res) => {
   }
 });
 
+app.get('/administrador', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM administrador');
+    res.json({
+      total: result.rowCount,
+      administrador: result.rows,
+    });
+  } catch (error) {
+    console.error('Erro ao obter administrador:', error);
+    res.status(500).send('Erro ao obter administrador');
+  }
+});
+
+app.post('/administrador', async (req, res) => {
+  console.log("Teste");
+  
+  try {
+    const {
+     nome, login, senha
+    } = req.body;
+
+    // Verifica se todos os campos estão preenchidos
+    if (
+
+      !nome ||
+      !login ||
+      !senha 
+    ) {
+      res.status(400).send({ message: 'Preencha todos os campos' });
+      return;
+    }
+
+    // Inserção no banco de dados
+    const result = await pool.query(
+      'INSERT INTO administrador (nome, login, senha) VALUES ($1, $2, $3) RETURNING *',
+      [
+        nome, 
+        login,
+        senha
+      ]
+    );
+    if (result.rowCount > 0) {
+      res.status(201).send({ message: 'administrador cadastrado com sucesso' });
+    } else {
+      res.status(400).send({ message: 'Erro ao cadastrar o administrador' });
+    }
+  } catch (e) {
+    console.error('Erro ao criar administrador:', e.message, e.stack);
+    res.status(500).send({ mensagem: 'Não foi possível cadastrar o administrador' });
+  }
+});
+
+app.put('/administrador/:id', async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  const { 
+    nome,
+    login,
+    senha
+  } = req.body;
+
+  const query = `
+    UPDATE administrador 
+    SET nome = $1, login = $2, senha = $3 WHERE id_administrador = $4 `;
+  
+  const values = [
+   nome,
+   login,
+   senha,
+    id
+  ];
+
+  try {
+    await pool.query(query, values);
+    res.send('administrador atualizado com sucesso');
+  } catch (err) {
+    console.error('Erro ao atualizar administrador:', err);
+    res.status(500).send('Erro ao atualizar administrador');
+  }
+});
+
+app.delete('/administrador/:id', async (req, res) => {
+  const id = req.params.id;
+  const query = 'DELETE FROM administrador WHERE id_administrador =$1 ';
+
+  try {
+    await pool.query(query, [id]);
+    res.send('administrador deletado com sucesso');
+  } catch (err) {
+    console.error('Erro ao deletar administrador:', err);
+    res.status(500).send('Erro ao deletar administrador');
+  }
+});
 
 app.listen(PORT, () => {
-  console.log('Servidor rodando na porta ${PORT} 👨‍🏫👨‍🎓');
+  console.log(`Servidor rodando na porta ${PORT} 👨‍🏫👨‍🎓`);
 });
