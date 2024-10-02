@@ -6,7 +6,7 @@ const getPalavrasChave = async (req, res) => {
         const result = await pool.query('SELECT * FROM palavras_chaves');
         res.json({
             total: result.rowCount,
-            palavras: result.rows,
+            palavras_chaves: result.rows,
         });
     } catch (error) {
         console.error('Erro ao obter palavras-chave:', error);
@@ -85,7 +85,7 @@ const getCursosPorPalavraChave = async (req, res) => {
 
         res.json({
             total: result.rowCount,
-            cursos: result.rows,
+            palavras_chaves: result.rows,
         });
     } catch (error) {
         console.error('Erro ao obter cursos por palavra-chave:', error);

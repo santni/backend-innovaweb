@@ -246,6 +246,91 @@ app.delete('/administrador/:id', async (req, res) => {
   }
 });
 
+app.get('/palavras_chaves', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM palavras_chaves');
+    res.json({
+      total: result.rowCount,
+      palavras_chaves: result.rows,
+    });
+  } catch (error) {
+    console.error('Erro ao obter palavra_chave:', error);
+    res.status(500).send('Erro ao obter palavra_chave');
+  }
+});
+
+app.post('/palavras-chaves', async (req, res) => {
+  console.log("Teste");
+  
+  try {
+    const {
+    palavra
+    } = req.body;
+
+    // Verifica se todos os campos estão preenchidos
+    if (
+
+      !palavra 
+    ) {
+      res.status(400).send({ message: 'Preencha todos os campos' });
+      return;
+    }
+
+    // Inserção no banco de dados
+    const result = await pool.query(
+      'INSERT INTO palavras_chaves (palavra) VALUES ($1) RETURNING *',
+      [
+        nome
+      ]
+    );
+    if (result.rowCount > 0) {
+      res.status(201).send({ message: 'palavra-chave cadastrada com sucesso' });
+    } else {
+      res.status(400).send({ message: 'Erro ao cadastrar a palavra-chave' });
+    }
+  } catch (e) {
+    console.error('Erro ao criar palavra-chave:', e.message, e.stack);
+    res.status(500).send({ mensagem: 'Não foi possível cadastrar a palavra-chave' });
+  }
+});
+
+app.put('/palavras_chaves/:id', async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  const { 
+    nome
+  } = req.body;
+
+  const query = `
+    UPDATE palavras_chaves SET palavra = $1 WHERE id_palavrasChaves = $2 `;
+  
+  const values = [
+   nome,
+    id
+  ];
+
+  try {
+    await pool.query(query, values);
+    res.send('palavra-chave atualizada com sucesso');
+  } catch (err) {
+    console.error('Erro ao atualizar palavra-chave:', err);
+    res.status(500).send('Erro ao atualizar palavra-chave');
+  }
+});
+
+app.delete('/palavras_chaves/:id', async (req, res) => {
+  const id = req.params.id;
+  const query = 'DELETE FROM palavras_chaves WHERE id_palavrasChaves = $1 ';
+
+  try {
+    await pool.query(query, [id]);
+    res.send('palavra-chave deletada com sucesso');
+  } catch (err) {
+    console.error('Erro ao deletar palavra-chave:', err);
+    res.status(500).send('Erro ao deletar palavra-chave');
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT} 👨‍🏫👨‍🎓`);
 });
