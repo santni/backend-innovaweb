@@ -2,7 +2,8 @@ CREATE TABLE administrador (
     id_administrador SERIAL PRIMARY KEY,
     nome VARCHAR(255),
     login VARCHAR(100),
-    senha VARCHAR(255)
+    senha VARCHAR(255),
+    super BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE area (

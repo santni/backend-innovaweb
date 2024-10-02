@@ -77,8 +77,8 @@ const getCursosPorPalavraChave = async (req, res) => {
 
     try {
         const result = await pool.query(`
-      SELECT c.* FROM cursos c
-      WHERE c.id_palavraChave IN (
+      SELECT * FROM cursos 
+      WHERE id_palavrasChaves IN (
         SELECT id_palavrasChaves FROM palavras_chaves WHERE palavras ILIKE $1
       )
    ` , [`%${palavras}%`]);
