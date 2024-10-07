@@ -16,13 +16,13 @@ CREATE TABLE area (
 
 CREATE TABLE palavras_chaves (
     id_palavrasChaves SERIAL PRIMARY KEY,
-    palavras VARCHAR(100)
+    palavras VARCHAR(100),
+    id_curso_fk INT REFERENCES cursos(id_curso) ON DELETE CASCADE
 );
 
 
-
 CREATE TABLE cursos (
-    id_cursos SERIAL PRIMARY KEY,
+    id_curso SERIAL PRIMARY KEY,
     titulo VARCHAR(255),
     modalidade VARCHAR(255),
     carga_horaria INT,

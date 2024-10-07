@@ -2,7 +2,11 @@ const pool = require('../config/db.config');
 
 const getUserByEmail = async (req, res) => {
     try {
-        const { email } = req.params;
+        const { email, super_adm } = req.params;
+
+        if (!super_adm) {
+            return res.status(403).send({ message: 'Acesso negado. Somente usuários super podem criar administradores.' });
+        }
 
         const user = await pool.query('SELECT * FROM users WHERE email=$1', [email]);
         return user.rowCount > 0 
@@ -29,28 +33,35 @@ const getAdm = async (req, res) => {
 
 const createAdm = async (req, res) => {
     try {
-        const { nome, login, senha } = req.body;
+        const { nome, login, senha, super_adm } = req.body;
 
-        if (!nome || !login || !senha) {
-            res.status(400).send({ message: 'Preencha todos os campos' });
-            return;
+        // Verifica se o usuário é "super"
+        if (!super_adm) {
+            return res.status(403).send({ message: 'Acesso negado. Somente usuários super podem criar administradores.' });
         }
 
+        // Verifica se os campos obrigatórios foram preenchidos
+        if (!nome || !login || !senha) {
+            return res.status(400).send({ message: 'Preencha todos os campos' });
+        }
+
+        // Insere o novo administrador no banco de dados
         const result = await pool.query(
             'INSERT INTO administrador (nome, login, senha) VALUES ($1, $2, $3) RETURNING *',
             [nome, login, senha]
         );
 
         if (result.rowCount > 0) {
-            res.status(201).send({ message: 'Administrador cadastrado com sucesso' });
+            return res.status(201).send({ message: 'Administrador cadastrado com sucesso' });
         } else {
-            res.status(400).send({ message: 'Erro ao cadastrar o administrador' });
+            return res.status(400).send({ message: 'Erro ao cadastrar o administrador' });
         }
     } catch (error) {
         console.error('Erro ao criar administrador:', error.message);
-        res.status(500).send({ mensagem: 'Não foi possível cadastrar o administrador' });
+        return res.status(500).send({ message: 'Não foi possível cadastrar o administrador' });
     }
 };
+
 
 const updateAdm = async (req, res) => {
     const id = req.params.id;
