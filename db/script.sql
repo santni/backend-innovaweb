@@ -1,9 +1,9 @@
 CREATE TABLE administrador (
     id_administrador SERIAL PRIMARY KEY,
-    nome VARCHAR(255),
+    email VARCHAR(255),
     login VARCHAR(100),
     senha VARCHAR(255),
-    super BOOLEAN DEFAULT FALSE
+    super_adm BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE area (
@@ -13,13 +13,6 @@ CREATE TABLE area (
     video VARCHAR(255),
     descricao TEXT
 );
-
-CREATE TABLE palavras_chaves (
-    id_palavrasChaves SERIAL PRIMARY KEY,
-    palavras VARCHAR(100),
-    id_curso_fk INT REFERENCES cursos(id_curso) ON DELETE CASCADE
-);
-
 
 CREATE TABLE cursos (
     id_curso SERIAL PRIMARY KEY,
@@ -36,9 +29,17 @@ CREATE TABLE cursos (
     turnos VARCHAR(100),
     status VARCHAR(50),
     imagem VARCHAR(255),
-    id_area INT REFERENCES area(id_area) ON DELETE CASCADE,
-    id_palavraChave INT REFERENCES palavras_chaves(id_palavrasChaves) ON DELETE CASCADE
+    id_area INT REFERENCES area(id_area) ON DELETE CASCADE
 );
+
+CREATE TABLE palavras_chaves (
+    id SERIAL PRIMARY KEY,
+    palavras VARCHAR(100),
+    id_curso_fk INT REFERENCES cursos(id_curso)
+);
+
+
+
 
 INSERT INTO cursos (titulo, modalidade, carga_horaria, nivel, descricao, descricao_requisitos, programacao, modalidade_aula, metodologia_ensino, idade, turnos, status, imagem)
 VALUES 

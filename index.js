@@ -10,7 +10,7 @@ app.use(express.json());
 // Rotas para administradores, cursos e palavras-chave
 app.use('/administrador', administradorRouter);
 app.use('/cursos', cursosRouter);
-app.use('/palavrasChave', palavrasChaveRouter);
+app.use('/palavras', palavrasChaveRouter);
 
 // Rota de teste para verificar se o servidor está rodando
 app.get('/', (req, res) => {

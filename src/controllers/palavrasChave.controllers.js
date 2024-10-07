@@ -41,12 +41,12 @@ const updatePalavraChave = async (req, res) => {
     }
 
     try {
-        const result = await pool.query('SELECT * FROM palavras_chaves WHERE id_palavrasChaves = $1', [id]);
+        const result = await pool.query('SELECT * FROM palavras_chaves WHERE id = $1', [id]);
         if (result.rowCount === 0) {
             return res.status(404).send({ message: 'Palavra-chave não encontrada' });
         }
 
-        await pool.query('UPDATE palavras_chaves SET palavras = $1 WHERE id_palavrasChaves = $2', [palavras, id]);
+        await pool.query('UPDATE palavras_chaves SET palavras = $1 WHERE id = $2', [palavras, id]);
         res.send('Palavra-chave atualizada com sucesso');
     } catch (error) {
         console.error('Erro ao atualizar palavra-chave:', error);
@@ -58,39 +58,41 @@ const deletePalavraChave = async (req, res) => {
     const id = req.params.id;
 
     try {
-        const result = await pool.query('SELECT * FROM palavras_chaves WHERE id_palavrasChaves = $1', [id]);
+        const result = await pool.query('SELECT * FROM palavras_chaves WHERE id = $1', [id]);
         if (result.rowCount === 0) {
             return res.status(404).send({ message: 'Palavra-chave não encontrada' });
         }
 
-        await pool.query('DELETE FROM palavras_chaves WHERE id_palavrasChaves = $1', [id]);
+        await pool.query('DELETE FROM palavras_chaves WHERE id = $1', [id]);
         res.send('Palavra-chave deletada com sucesso');
     } catch (error) {
         console.error('Erro ao deletar palavra-chave:', error);
         res.status(500).send('Erro ao deletar a palavra-chave');
     }
 };
-
 const getCursosPorPalavraChave = async (req, res) => {
+    console.log('Passou aqui');
     const { palavras } = req.params;
 
     try {
         const result = await pool.query(`
-      SELECT * FROM cursos 
-      WHERE id_palavrasChaves IN (
-        SELECT id_palavrasChaves FROM palavras_chaves WHERE palavras ILIKE $1
-      )
-   ` , [`%${palavras}%`]);
+            SELECT c.* 
+            FROM cursos c
+            JOIN palavras_chaves pc ON c.id_curso = pc.id_curso_fk
+            WHERE pc.palavras ILIKE $1
+        `, [`%${palavras}%`]); // Adiciona '%' para busca em qualquer parte da palavra
 
         res.json({
             total: result.rowCount,
-            palavras_chaves: result.rows,
+            cursos: result.rows, // Retorna cursos associados à palavra-chave parcial
         });
     } catch (error) {
         console.error('Erro ao obter cursos por palavra-chave:', error);
         res.status(500).send('Erro ao obter cursos por palavra-chave');
     }
 };
+
+
 
 module.exports = {
     getPalavrasChave,

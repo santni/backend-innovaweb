@@ -13,6 +13,6 @@ router.get('/', getPalavrasChave);
 router.post('/', createPalavraChave);
 router.put('/:id', updatePalavraChave);
 router.delete('/:id', deletePalavraChave);
-router.get('/cursos/:palavras', getCursosPorPalavraChave);
+router.get('/filtro/:palavras', getCursosPorPalavraChave);
 
 module.exports = router;

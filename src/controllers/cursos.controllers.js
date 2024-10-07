@@ -80,37 +80,6 @@ const deleteCurso = async (req, res) => {
   }
 };
 
-const getCursosPorPalavraChave = async (req, res) => {
-  const { palavra } = req.params;  // A palavra-chave virá como parâmetro na URL
-
-  try {
-    // Consulta para verificar se a palavra-chave existe e retornar os cursos relacionados
-    const query = `
-      SELECT c.*
-      FROM cursos c
-      JOIN palavras_chaves pc ON pc.id_curso_fk = c.id_curso
-      WHERE pc.palavras = $1
-    `;
-    
-    const result = await pool.query(query, [palavra]);
-
-    if (result.rowCount > 0) {
-      res.json({
-        total: result.rowCount,
-        cursos: result.rows
-      });
-    } else {
-      res.status(404).send({ message: 'Nenhum curso encontrado para essa palavra-chave' });
-    }
-  } catch (error) {
-    console.error('Erro ao buscar cursos por palavra-chave:', error);
-    res.status(500).send('Erro ao buscar cursos por palavra-chave');
-  }
-};
-
-
-
-
 module.exports = {
   getCursos,
   createCurso,
