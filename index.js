@@ -5,10 +5,9 @@ const cursosRouter = require('./src/routes/cursos.routes');
 const palavrasChaveRouter = require('./src/routes/palavrasChave.routes');
 require('dotenv').config();
 
-// Middleware para entender JSON
 app.use(express.json());
 
-// Rotas para administradores, cursos e palavras-chave (junção)
+// Rotas para administradores, cursos e palavras-chave
 app.use('/administrador', administradorRouter);
 app.use('/cursos', cursosRouter);
 app.use('/palavrasChave', palavrasChaveRouter);
