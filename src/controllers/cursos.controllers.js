@@ -1,4 +1,4 @@
-const pool = require('../db'); // Importa o pool de conexão com o banco
+const pool = require('../config/db.config'); 
 
 const getCursos = async (req, res) => {
   try {
@@ -9,7 +9,7 @@ const getCursos = async (req, res) => {
     });
   } catch (error) {
     console.error('Erro ao obter cursos:', error);
-    res.status(500).send('Erro ao obter cursos');
+    res.status(500).send('Erro ao obter cursos SOCORROOOOOO');
   }
 };
 

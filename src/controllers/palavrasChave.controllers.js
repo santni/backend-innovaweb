@@ -1,6 +1,5 @@
-const pool = require('../db'); // Importa o pool de conexão com o banco
+const pool = require('../config/db.config'); 
 
-// Pega todas as palavras-chave
 const getPalavrasChave = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM palavras_chaves');
