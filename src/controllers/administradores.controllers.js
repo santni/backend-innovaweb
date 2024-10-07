@@ -1,4 +1,4 @@
-const pool = require('../db'); // Importa o pool de conexão com o banco
+const pool = require('../config/db.config'); 
 
 const getAdm = async (req, res) => {
   try {

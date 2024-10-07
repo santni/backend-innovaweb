@@ -9,10 +9,10 @@ const {
 } = require('../controllers/palavrasChave.controllers'); 
 
 
-router.get('/palavras-chave', getPalavrasChave);
-router.post('/palavras-chave', createPalavraChave);
-router.put('/palavras-chave/:id', updatePalavraChave);
-router.delete('/palavras-chave/:id', deletePalavraChave);
-router.get('/cursos/palavra-chave/:palavras', getCursosPorPalavraChave);
+router.get('/', getPalavrasChave);
+router.post('/', createPalavraChave);
+router.put('/:id', updatePalavraChave);
+router.delete('/:id', deletePalavraChave);
+router.get('/cursos/:palavras', getCursosPorPalavraChave);
 
 module.exports = router;
