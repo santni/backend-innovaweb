@@ -1,5 +1,6 @@
 const pool = require('../config/db.config'); 
 
+
 const getCursos = async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM cursos');

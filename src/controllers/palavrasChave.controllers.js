@@ -8,7 +8,7 @@ const getPalavrasChave = async (req, res) => {
             palavras_chaves: result.rows,
         });
     } catch (error) {
-        console.error('Erro ao obter palavras-chave:', error);
+        console.error('Erro ao obter palavras-chave:', error);1
         res.status(500).send('Erro ao obter palavras-chave');
     }
 };
