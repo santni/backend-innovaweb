@@ -44,6 +44,102 @@ const getCursosPorIdade = async (req, res) => {
     }
 };
 
+const getCursosPorModalidade = async (req, res) => {
+  console.log('Filtrando cursos pela modalidade');
+  const { modalidade } = req.params;
+
+  try {
+  
+      if (!modalidade) {
+          return res.status(400).send('Modalidade não fornecida');
+      }
+
+      const result = await pool.query(`
+          SELECT * 
+          FROM cursos
+          WHERE modalidade ILIKE $1
+      `, [modalidade]); 
+
+      if (result.rowCount > 0) {
+          res.json({
+              total: result.rowCount,
+              cursos: result.rows, 
+          });
+      } else {
+          res.status(404).json({
+              message: 'Nenhum curso correspondente encontrado para a modalidade fornecida.',
+          });
+      }
+  } catch (error) {
+      console.error('Erro ao filtrar cursos pela modalidade:', error);
+      res.status(500).send('Erro ao filtrar cursos pela modalidade');
+  }
+};
+
+const getCursosPorNivel = async (req, res) => {
+  console.log('Filtrando cursos pelo nível');
+  const { nivel } = req.params;
+
+  try {
+      // Verifica se o nível foi passado como parâmetro
+      if (!nivel) {
+          return res.status(400).send('Nível não fornecido');
+      }
+
+      const result = await pool.query(`
+          SELECT * 
+          FROM cursos
+          WHERE nivel ILIKE $1
+      `, [nivel]); 
+      if (result.rowCount > 0) {
+          res.json({
+              total: result.rowCount,
+              cursos: result.rows, 
+          });
+      } else {
+          res.status(404).json({
+              message: 'Nenhum curso correspondente encontrado para o nível fornecido.',
+          });
+      }
+  } catch (error) {
+      console.error('Erro ao filtrar cursos pelo nível:', error);
+      res.status(500).send('Erro ao filtrar cursos pelo nível');
+  }
+};
+
+const getCursosPorTurno = async (req, res) => {
+  console.log('Filtrando cursos pelo turno');
+  const { turno } = req.params;
+
+  try {
+      // Verifica se o turno foi passado como parâmetro
+      if (!turno) {
+          return res.status(400).send('Turno não fornecido');
+      }
+
+    
+      const result = await pool.query(`
+          SELECT * 
+          FROM cursos
+          WHERE turnos ILIKE $1
+      `, [turno]); 
+
+      if (result.rowCount > 0) {
+          res.json({
+              total: result.rowCount,
+              cursos: result.rows,
+          });
+      } else {
+          res.status(404).json({
+              message: 'Nenhum curso correspondente encontrado para o turno fornecido.',
+          });
+      }
+  } catch (error) {
+      console.error('Erro ao filtrar cursos pelo turno:', error);
+      res.status(500).send('Erro ao filtrar cursos pelo turno');
+  }
+};
+
 
 
 const createCurso = async (req, res) => {
@@ -116,6 +212,9 @@ const deleteCurso = async (req, res) => {
 module.exports = {
   getCursos,
   getCursosPorIdade,
+  getCursosPorModalidade,
+  getCursosPorNivel,
+  getCursosPorTurno,
   createCurso,
   updateCurso,
   deleteCurso,
