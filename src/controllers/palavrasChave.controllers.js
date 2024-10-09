@@ -1,4 +1,4 @@
-const pool = require('../config/db.config'); 
+const pool = require('../config/db.config');
 
 const getPalavrasChave = async (req, res) => {
     try {
@@ -70,27 +70,61 @@ const deletePalavraChave = async (req, res) => {
         res.status(500).send('Erro ao deletar a palavra-chave');
     }
 };
+
 const getCursosPorPalavraChave = async (req, res) => {
     console.log('Passou aqui');
     const { palavras } = req.params;
+
+    console.log(palavras);
 
     try {
         const result = await pool.query(`
             SELECT c.* 
             FROM cursos c
             JOIN palavras_chaves pc ON c.id_curso = pc.id_curso_fk
-            WHERE pc.palavras ILIKE $1
+            WHERE unaccent(pc.palavras) ILIKE unaccent($1)
         `, [`%${palavras}%`]); // Adiciona '%' para busca em qualquer parte da palavra
 
-        res.json({
-            total: result.rowCount,
-            cursos: result.rows, // Retorna cursos associados à palavra-chave parcial
-        });
+        if (result.rowCount > 0) {
+            res.json({
+                total: result.rowCount,
+                cursos: result.rows, // Retorna cursos associados à palavra-chave parcial
+            });
+        } else {
+            // Segunda consulta busca nas colunas da tabela cursos
+            const searchResult = await pool.query(`
+                  SELECT *
+                        FROM cursos
+                        WHERE unaccent(titulo) ILIKE unaccent($1)
+                        OR unaccent(modalidade) ILIKE unaccent($1)
+                        OR unaccent(nivel) ILIKE unaccent($1)
+                        OR unaccent(descricao) ILIKE unaccent($1)
+                        OR unaccent(descricao_requisitos) ILIKE unaccent($1)
+                        OR unaccent(programacao) ILIKE unaccent($1)
+                        OR unaccent(modalidade_aula) ILIKE unaccent($1)
+                        OR unaccent(metodologia_ensino) ILIKE unaccent($1)
+                        OR unaccent(turnos) ILIKE unaccent($1)
+                        OR unaccent(status) ILIKE unaccent($1)
+            `, [`%${palavras}%`]);
+
+            if (searchResult.rowCount > 0) {
+                res.json({
+                    total: searchResult.rowCount,
+                    cursos: searchResult.rows, // Retorna todos os dados dos cursos encontrados
+                });
+            } else {
+                // Caso não haja dados correspondentes
+                res.status(404).json({
+                    message: 'Nenhum dado correspondente encontrado.',
+                });
+            }
+        }
     } catch (error) {
         console.error('Erro ao obter cursos por palavra-chave:', error);
         res.status(500).send('Erro ao obter cursos por palavra-chave');
     }
 };
+
 
 
 

@@ -60,3 +60,6 @@ VALUES
 INSERT INTO cursos (titulo, modalidade, carga_horaria, nivel, descricao, descricao_requisitos, programacao, modalidade_aula, metodologia_ensino, idade, turnos, status, imagem)
 VALUES 
 ('Curso de E-commerce', 'Online', 100, 'Intermediário', 'Curso completo sobre como criar e gerenciar lojas online.', 'Conhecimento básico de marketing digital.', 'Shopify, Woocommerce, Estratégias de Venda', 'Ao vivo', 'Estudos de caso e workshops práticos', 22, 'Manhã', 'Ativo', 'imagem10.jpg');
+
+
+CREATE EXTENSION unaccent;
