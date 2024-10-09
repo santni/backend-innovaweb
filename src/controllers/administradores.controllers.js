@@ -18,6 +18,8 @@ const getUserByEmail = async (req, res) => {
     }
 }
 
+
+
 const getAdm = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM administrador');
