@@ -10,7 +10,10 @@ const getCursos = async (req, res) => {
     });
   } catch (error) {
     console.error('Erro ao obter cursos:', error);
-    res.status(500).send('Erro ao obter cursos ');
+    res.status(500).json({
+      message: 'Erro ao obter cursos',
+      error: error.message,
+    });
   }
 };
 
