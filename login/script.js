@@ -21,7 +21,7 @@ const signUp = () => {
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then((result) => {
-      document.write("You are signed up successfully");
+      document.write("Cadastrado com sucesso!");
       console.log(result);
     })
     .catch((error) => {
@@ -40,7 +40,7 @@ const signIn = () => {
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then((result) => {
-      document.write("You are signed in successfully");
+      document.write("Email já cadastrado!");
       console.log(result);
     })
     .catch((error) => {
