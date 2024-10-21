@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Sign In</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-auth-compat.js"></script>
+    <script src="../js/script.js" defer></script>
+  </head>
+  <body class="tudoIn">
+      <div class="form">
+        <div class="email">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Write your email"
+          />
+        </div>
+        <div class="pass">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="password"
+          />
+        </div>
+
+        <button id="submit-btn" onclick="signIn()">Sign In</button>
+        <p>
+          Never made an account yet ?
+          <a href="signUp.html">Sign Up</a>
+        </p>
+      </div>
+  </body>
+</html>

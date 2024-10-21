@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+.tudoUp {
+    background-color: #9633FF;
+}
+
+.tudoIn {
+    background-color: green;
+}
+
+.form {
+    width: 400px;
+    border-radius: 5px;
+    background-color: white;
+    padding: 10px;
+}
+
+label {
+    display: block;
+    font-weight: bolder;
+    margin: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 8px 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#submit-btn {
+    border: none;
+    background-color: blueviolet;
+    width: 100%;
+    padding: 10px;
+    color: white;
+    font-weight: bolder;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin: 9px 0px;
+}
+
+p {
+    font-size: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: 14px;
+}
