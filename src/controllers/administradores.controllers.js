@@ -17,7 +17,7 @@ const getAdm = async (req, res) => {
 
 const createAdm = async (req, res) => {
     try {
-        const { email, login, senha, super_adm } = req.body; // Incluindo o campo 'email'
+        const { email, login, senha } = req.body; // Incluindo o campo 'email'
 
         // Verifica se os campos obrigatórios foram preenchidos
         if (!email || !login || !senha) {
