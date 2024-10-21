@@ -1,5 +1,6 @@
 // src/controllers/admin.controller.js
 const pool = require('../config/db.config');
+const bcrypt = require('bcrypt');
 
 const getAdm = async (req, res) => {
     try {
@@ -23,10 +24,13 @@ const createAdm = async (req, res) => {
             return res.status(400).send({ message: 'Preencha todos os campos' });
         }
 
+        const senhaEncriptada = await bcrypt.hash(senha, 8)
+        
+
         // Insere o novo administrador no banco de dados
         const result = await pool.query(
             'INSERT INTO administrador (email, login, senha) VALUES ($1, $2, $3) RETURNING *',
-            [email, login, senha]
+            [email, login, senhaEncriptada]
         );
 
         if (result.rowCount > 0) {
