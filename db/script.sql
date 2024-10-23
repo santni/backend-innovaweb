@@ -1,3 +1,10 @@
+-- criação do banco
+CREATE DATABASE innova_web
+
+-- comando para entrar no banco 
+\c innova_web;
+
+
 CREATE TABLE administrador (
     id_administrador SERIAL PRIMARY KEY,
     email VARCHAR(255),

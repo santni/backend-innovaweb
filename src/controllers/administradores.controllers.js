@@ -1,24 +1,6 @@
-const pool = require('../config/db.config'); 
-
-const getUserByEmail = async (req, res) => {
-    try {
-        const { email, super_adm } = req.params;
-
-        if (!super_adm) {
-            return res.status(403).send({ message: 'Acesso negado. Somente usuários super podem criar administradores.' });
-        }
-
-        const user = await pool.query('SELECT * FROM users WHERE email=$1', [email]);
-        return user.rowCount > 0 
-            ? res.status(200).send(user.rows[0]) 
-            : res.status(200).send({ message: 'User not found' });
-    } catch (e) {
-        console.log('Could not GET user by email, server error', e);
-        return res.status(500).send({ message: 'Could not HTTP GET' }); 
-    }
-}
-
-
+// src/controllers/admin.controller.js
+const pool = require('../config/db.config');
+const bcrypt = require('bcrypt');
 
 const getAdm = async (req, res) => {
     try {
@@ -35,22 +17,20 @@ const getAdm = async (req, res) => {
 
 const createAdm = async (req, res) => {
     try {
-        const { nome, login, senha, super_adm } = req.body;
-
-        // Verifica se o usuário é "super"
-        if (!super_adm) {
-            return res.status(403).send({ message: 'Acesso negado. Somente usuários super podem criar administradores.' });
-        }
+        const { email, login, senha } = req.body; // Incluindo o campo 'email'
 
         // Verifica se os campos obrigatórios foram preenchidos
-        if (!nome || !login || !senha) {
+        if (!email || !login || !senha) {
             return res.status(400).send({ message: 'Preencha todos os campos' });
         }
 
+        const senhaEncriptada = await bcrypt.hash(senha, 8)
+        
+
         // Insere o novo administrador no banco de dados
         const result = await pool.query(
-            'INSERT INTO administrador (nome, login, senha) VALUES ($1, $2, $3) RETURNING *',
-            [nome, login, senha]
+            'INSERT INTO administrador (email, login, senha) VALUES ($1, $2, $3) RETURNING *',
+            [email, login, senhaEncriptada]
         );
 
         if (result.rowCount > 0) {
@@ -98,10 +78,12 @@ const deleteAdm = async (req, res) => {
     }
 };
 
+// Outras funções CRUD: updateAdm, deleteAdm...
+
 module.exports = {
-    getUserByEmail,
     getAdm,
     createAdm,
     updateAdm,
     deleteAdm,
+    // exportar outras funções CRUD
 };

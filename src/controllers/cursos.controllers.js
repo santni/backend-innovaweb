@@ -10,7 +10,10 @@ const getCursos = async (req, res) => {
     });
   } catch (error) {
     console.error('Erro ao obter cursos:', error);
-    res.status(500).send('Erro ao obter cursos ');
+    res.status(500).json({
+      message: 'Erro ao obter cursos',
+      error: error.message,
+    });
   }
 };
 
@@ -200,6 +203,7 @@ const updateCurso = async (req, res) => {
 const deleteCurso = async (req, res) => {
   const id = req.params.id;
   const query = 'DELETE FROM cursos WHERE id_curso=$1';
+
 
   try {
     await pool.query(query, [id]);

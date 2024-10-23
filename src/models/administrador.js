@@ -1,28 +1,22 @@
-const express = require('express');
-const { types } = require('pg');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-const AdmSchema = new express.Schema ({
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
 
-    email: {
-        type: String,
-        unique: true,
-        required: true,
-        lowercase: true
-    },
+  if (!token) {
+    return res.status(401).json({ message: 'Token não encontrado' });
+  }
 
-    password: {
-        type: String,
-        unique: true,
-        required: true,
-        select: false,
-    },
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: 'Token inválido' });
+    }
 
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-});
+    req.user = user;
+    next();
+  });
+};
 
-const Adm = express.model('Adm', userSchema);
-
-module.exports = Adm;
+module.exports = authenticateToken;
