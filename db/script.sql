@@ -68,4 +68,26 @@ VALUES
 
 
 
+INSERT INTO area (nome_area, imagem, descricao)
+VALUES 
+('Tecnologia da informação e informática', 'https://online.pucrs.br/hs-fs/hubfs/Generated%20images/imagem%20de%20uma%20pessoa%20trabalhando%20com%20tecnologia%20em%20um%20escrit%C3%B3rio.jpeg?width=871&height=443&name=imagem%20de%20uma%20pessoa%20trabalhando%20com%20tecnologia%20em%20um%20escrit%C3%B3rio.jpeg', 'Ainda que possa ser compreendida de várias formas, a TI é entendida como o conjunto de todas as atividades e soluções produzidas por meio de recursos tecnológicos da computação para realizar o armazenamento, processamento, utilização e transmissão da informação');
+
+INSERT INTO area (nome_area, imagem, descricao)
+VALUES 
+('Administração e Gestão', 'https://academiadeexecutivos.com/wp-content/uploads/2023/04/Adm.png', 'Resumidamente, a Gestão é uma prática voltada ao aspecto político-administrativo de uma equipe ou empresa, em que as relações pessoais e de rotina estão envolvidas no processo como um todo. A Administração, por sua vez, é usada para guiar um projeto ou uma empresa a objetivos específicos');
+
+INSERT INTO area (nome_area, imagem, descricao)
+VALUES 
+('Alimentos e Bebidas', 'https://sebrae.com.br/Sebrae/Portal%20Sebrae/Artigos/Imagens/imagem_alimentos_e_bebidas_tendencias-do-setor-de-alimentos-e-bebidas-para-2023.jpg', 'A cadeia de Alimentos e Bebidas compreende atividades relacionadas à fabricação de produtos alimentares, incluindo massas, laticínios, gelados comestíveis, carnes e derivados, cereais e farináceos, produtos de panificação, bebidas alcoólicas e não alcoólicas, dentre outros. O setor atravessa um período desafiador');
+
+INSERT INTO area (nome_area, imagem, descricao)
+VALUES 
+('Construção Civil e Design de Mobiliário', 'https://decorehome.com.br/wp-content/uploads/2017/02/architecture-400x250.jpg', 'Os cursos do SENAI-SP nas áreas de Construção Civil e Design Mobiliário abrangem: Construção Pesada, Edificações, Instalações, entre outros. O objetivo é formar profissionais com sólida base teórico-metodológica e prática');
+
+INSERT INTO area (nome_area, imagem, descricao)
+VALUES 
+('Fabricação Mecânica e Manutenção Industrial.', 'https://www.abecom.com.br/wp-content/uploads/2022/04/tecnico-mecanico-de-manutencao-industrial.jpg', 'É o profissional que vai atuar no reparo e manutenções de máquinas industriais. Por exemplo, envazadoras, agitadores, motores elétricos, compressores e uma infinidade de outros equipamentos');
+
+
+
 CREATE EXTENSION unaccent;
