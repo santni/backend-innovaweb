@@ -1,5 +1,5 @@
 -- criação do banco
-CREATE DATABASE innova_web
+CREATE DATABASE innovaweb
 
 -- comando para entrar no banco 
 \c innova_web;
@@ -10,14 +10,12 @@ CREATE TABLE administrador (
     email VARCHAR(255),
     login VARCHAR(100),
     senha VARCHAR(255),
-    super_adm BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE area (
     id_area SERIAL PRIMARY KEY,
     nome_area VARCHAR(255),
     imagem VARCHAR(255),
-    video VARCHAR(255),
     descricao TEXT
 );
 

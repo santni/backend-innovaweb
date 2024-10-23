@@ -47,14 +47,14 @@ const createAdm = async (req, res) => {
 
 const updateAdm = async (req, res) => {
     const id = req.params.id;
-    const { nome, login, senha } = req.body;
+    const { email, login, senha } = req.body;
 
     const query = `
         UPDATE administrador 
-        SET nome = $1, login = $2, senha = $3
+        SET email = $1, login = $2, senha = $3
         WHERE id_administrador = $4
     `;
-    const values = [nome, login, senha, id];
+    const values = [email, login, senha, id];
 
     try {
         await pool.query(query, values);
@@ -67,7 +67,7 @@ const updateAdm = async (req, res) => {
 
 const deleteAdm = async (req, res) => {
     const id = req.params.id;
-    const query = 'DELETE FROM administrador WHERE id_administrador = $1';
+    const query = 'DELETE FROM administrador WHERE id_administrador =$1';
 
     try {
         await pool.query(query, [id]);
