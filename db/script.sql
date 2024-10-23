@@ -2,7 +2,7 @@
 CREATE DATABASE innova_web
 
 -- comando para entrar no banco 
-\c inonva_web;
+\c innova_web;
 
 
 CREATE TABLE administrador (

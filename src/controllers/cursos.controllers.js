@@ -187,7 +187,7 @@ const updateCurso = async (req, res) => {
     UPDATE cursos 
     SET titulo = $1, modalidade = $2, carga_horaria = $3, nivel = $4, descricao = $5, descricao_requisitos = $6, 
         programacao = $7, modalidade_aula = $8, metodologia_ensino = $9, idade = $10, turnos = $11, status = $12, imagem = $13 
-    WHERE id_cursos = $14
+    WHERE id_curso = $14
   `;
   const values = [titulo, modalidade, carga_horaria, nivel, descricao, descricao_requisitos, programacao, modalidade_aula, metodologia_ensino, idade, turnos, status, imagem, id];
 
@@ -202,7 +202,7 @@ const updateCurso = async (req, res) => {
 
 const deleteCurso = async (req, res) => {
   const id = req.params.id;
-  const query = 'DELETE FROM cursos WHERE id_cursos=$1';
+  const query = 'DELETE FROM cursos WHERE id_curso=$1';
 
   try {
     await pool.query(query, [id]);
