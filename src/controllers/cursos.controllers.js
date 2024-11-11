@@ -216,6 +216,7 @@ const deleteCurso = async (req, res) => {
 
 module.exports = {
   getCursos,
+  getCursosFiltrados,
   getCursosPorIdade,
   getCursosPorModalidade,
   getCursosPorNivel,
