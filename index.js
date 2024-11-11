@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require ("cors")
 const administradorRouter = require('./src/routes/administradores.routes');
 const cursosRouter = require('./src/routes/cursos.routes');
 const palavrasChaveRouter = require('./src/routes/palavrasChave.routes');
@@ -8,6 +9,7 @@ require('dotenv').config();
 
 // Middleware para processar JSON
 app.use(express.json());
+app.use(cors());
 
 // Rotas para administradores, cursos e palavras-chave
 app.use('/administrador', administradorRouter);
@@ -21,7 +23,7 @@ app.get('/', (req, res) => {
 });
 
 // Configuração da porta
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
