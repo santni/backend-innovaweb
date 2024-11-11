@@ -214,6 +214,8 @@ const deleteCurso = async (req, res) => {
   }
 };
 
+
+
 module.exports = {
   getCursos,
   getCursosFiltrados,
@@ -224,4 +226,6 @@ module.exports = {
   createCurso,
   updateCurso,
   deleteCurso,
+ 
+
 };
