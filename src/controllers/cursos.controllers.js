@@ -203,14 +203,30 @@ const updateCurso = async (req, res) => {
 const deleteCurso = async (req, res) => {
   const id = req.params.id;
   const query = 'DELETE FROM cursos WHERE id_curso=$1';
-
-
   try {
     await pool.query(query, [id]);
     res.send('Curso deletado com sucesso');
   } catch (err) {
     console.error('Erro ao deletar curso:', err);
     res.status(500).send('Erro ao deletar curso');
+  }
+};
+
+const getCursoById = async (req, res) => {
+  const id = req.params.id;
+  const query = 'SELECT * FROM cursos WHERE id_curso=$1';
+  
+  try {
+    const resultado = await pool.query(query, [id]);
+    
+    if (resultado.rows.length === 0) {
+      return res.status(404).send('Curso não encontrado');
+    }
+    
+    res.json(resultado.rows[0]);
+  } catch (err) {
+    console.error('Erro ao buscar curso:', err);
+    res.status(500).send('Erro ao buscar curso');
   }
 };
 
@@ -225,6 +241,6 @@ module.exports = {
   createCurso,
   updateCurso,
   deleteCurso,
- 
+  getCursoById
 
 };

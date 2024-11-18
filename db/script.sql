@@ -9,7 +9,7 @@ CREATE TABLE administrador (
     id_administrador SERIAL PRIMARY KEY,
     email VARCHAR(255),
     login VARCHAR(100),
-    senha VARCHAR(255),
+    senha VARCHAR(255)
 );
 
 CREATE TABLE area (
