@@ -6,6 +6,8 @@ const pool = require('../config/db.config');
 // Controlador de login para administrador
 const loginAdmin = async (req, res) => {
     const { email, senha } = req.body;
+    console.log(email, senha);
+    
 
     try {
         // Verificar se o administrador existe
