@@ -1,7 +1,6 @@
 -- criação do banco
-CREATE DATABASE innovaweb
+CREATE DATABASE innovaweb;
 
--- comando para entrar no banco 
 \c innova_web;
 
 
