@@ -3,7 +3,7 @@ const app = express();
 const administradorRouter = require('./src/routes/administradores.routes');
 const cursosRouter = require('./src/routes/cursos.routes');
 const palavrasChaveRouter = require('./src/routes/palavrasChave.routes');
-const authRouter = require('./src/routes/auth.routes'); // Importar o authRouter
+const authRouter = require('./src/routes/auth.routes'); 
 require('dotenv').config();
 const cors = require('cors');
 
@@ -20,6 +20,7 @@ app.use('/administrador', administradorRouter);
 app.use('/cursos', cursosRouter);
 app.use('/palavras', palavrasChaveRouter);
 app.use('/auth', authRouter); 
+app.use('/:id_curso', cursosRouter)
 
 // Rota de teste para verificar se o servidor está rodando
 app.get('/', (req, res) => {
@@ -31,3 +32,5 @@ const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
+
+

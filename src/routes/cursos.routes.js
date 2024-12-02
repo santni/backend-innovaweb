@@ -11,7 +11,7 @@ router.get('/idade/:idade', getCursosPorIdade);
 router.get('/modalidade/:modalidade', getCursosPorModalidade);
 router.get('/nivel/:nivel', getCursosPorNivel);
 router.get('/turno/:turno', getCursosPorTurno);
-router.get('/cursos/:id', getCursoById)
+router.get('/:id_curso', getCursoById)
 
 
 
