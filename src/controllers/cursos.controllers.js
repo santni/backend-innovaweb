@@ -149,21 +149,24 @@ const getCursosPorTurno = async (req, res) => {
 const createCurso = async (req, res) => {
   try {
     const {
-      titulo, modalidade, carga_horaria, nivel, descricao, descricao_requisitos, programacao, modalidade_aula, metodologia_ensino, idade, turnos, status, imagem,
+      titulo, modalidade, carga_horaria, nivel, descricao, descricao_requisitos, programacao, modalidade_aula, metodologia_ensino, idade, turnos, status
     } = req.body;
+
+    console.log(titulo, modalidade, carga_horaria, nivel, descricao, descricao_requisitos, programacao, modalidade_aula, metodologia_ensino, idade, turnos, status);
+    
 
     if (
       !titulo || !modalidade || !carga_horaria || !nivel || !descricao || 
       !descricao_requisitos || !programacao || !modalidade_aula || 
-      !metodologia_ensino || !idade || !turnos || !status || !imagem
+      !metodologia_ensino || !idade || !turnos || !status 
     ) {
       res.status(400).send({ message: 'Preencha todos os campos' });
       return;
     }
 
     const result = await pool.query(
-      'INSERT INTO cursos (titulo, modalidade, carga_horaria, nivel, descricao, descricao_requisitos, programacao, modalidade_aula, metodologia_ensino, idade, turnos, status, imagem) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *',
-      [titulo, modalidade, carga_horaria, nivel, descricao, descricao_requisitos, programacao, modalidade_aula, metodologia_ensino, idade, turnos, status, imagem]
+      'INSERT INTO cursos (titulo, modalidade, carga_horaria, nivel, descricao, descricao_requisitos, programacao, modalidade_aula, metodologia_ensino, idade, turnos, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *',
+      [titulo, modalidade, carga_horaria, nivel, descricao, descricao_requisitos, programacao, modalidade_aula, metodologia_ensino, idade, turnos, status]
     );
 
     if (result.rowCount > 0) {
@@ -180,16 +183,16 @@ const createCurso = async (req, res) => {
 const updateCurso = async (req, res) => {
   const id = req.params.id;
   const { 
-    titulo, modalidade, carga_horaria, nivel, descricao, descricao_requisitos, programacao, modalidade_aula, metodologia_ensino, idade, turnos, status, imagem
+    titulo, modalidade, carga_horaria, nivel, descricao, descricao_requisitos, programacao, modalidade_aula, metodologia_ensino, idade, turnos, status
   } = req.body;
 
   const query = `
     UPDATE cursos 
     SET titulo = $1, modalidade = $2, carga_horaria = $3, nivel = $4, descricao = $5, descricao_requisitos = $6, 
-        programacao = $7, modalidade_aula = $8, metodologia_ensino = $9, idade = $10, turnos = $11, status = $12, imagem = $13 
+        programacao = $7, modalidade_aula = $8, metodologia_ensino = $9, idade = $10, turnos = $11, status = $12 
     WHERE id_curso= $14
   `;
-  const values = [titulo, modalidade, carga_horaria, nivel, descricao, descricao_requisitos, programacao, modalidade_aula, metodologia_ensino, idade, turnos, status, imagem, id];
+  const values = [titulo, modalidade, carga_horaria, nivel, descricao, descricao_requisitos, programacao, modalidade_aula, metodologia_ensino, idade, turnos, status, id];
 
   try {
     await pool.query(query, values);
