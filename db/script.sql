@@ -32,7 +32,6 @@ CREATE TABLE cursos (
     idade INT,
     turnos VARCHAR(100),
     status VARCHAR(50),
-    imagem VARCHAR(255),
     id_area INT REFERENCES area(id_area) ON DELETE CASCADE
 );
 
